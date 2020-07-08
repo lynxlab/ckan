@@ -1990,7 +1990,7 @@ msgstr "File"
 #: ckan/public/base/javascript/modules/resource-reorder.js:41
 #: ckan/public/base/javascript/modules/resource-reorder.min.js:1
 msgid "Reorder resources"
-msgstr ""
+msgstr "Riordina le risorse"
 
 #: ckan/public/base/javascript/modules/resource-reorder.js:42
 #: ckan/public/base/javascript/modules/resource-reorder.min.js:1
@@ -1999,6 +1999,14 @@ msgid ""
 "the resource to the right and place it to the desired location on the list. "
 "When you are done, click the \"Save order\" -button."
 msgstr ""
+"Puoi riordinare le risorse usando l'icona a freccia per trascinarle."
+"Trascina la risorsa alla posizione che desideri nella lista."
+"Quando hai finito, clicca il bottone \"Salva ordine\"."
+
+#: ckan/public/base/javascript/modules/resource-view-reorder.js:41
+#: ckan/public/base/javascript/modules/resource-view-reorder.min.js:1
+msgid "Reorder resource view"
+msgstr "Riordina le viste della risorsa"
 
 #: ckan/public-bs2/base/javascript/modules/resource-reorder.js:56
 #: ckan/public-bs2/base/javascript/modules/resource-view-reorder.js:50
@@ -2070,6 +2078,10 @@ msgstr ""
 #: ckan/templates/package/snippets/view_form_filters.html:16
 msgid "Add Filter"
 msgstr "Aggiungi Filtro"
+
+#: ckan/public/base/javascript/modules/resource-view-reorder.js:41
+msgid "Reorder resource view"
+msgstr "Riordina le viste della risorsa"
 
 #: ckan/public-bs2/base/javascript/modules/resource-view-filters.js:52
 #: ckan/public/base/javascript/modules/resource-view-filters.js:52

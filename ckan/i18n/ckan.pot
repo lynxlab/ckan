@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckan 2.8.4b0\n"
+"Project-Id-Version: ckan 2.8.4.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-03 11:56+0200\n"
+"POT-Creation-Date: 2020-07-08 13:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,13 +194,13 @@ msgid "Request params must be in form of a json encoded dictionary."
 msgstr ""
 
 #: ckan/controllers/feed.py:234 ckan/controllers/group.py:128
-#: ckan/controllers/group.py:226 ckan/controllers/group.py:394
-#: ckan/controllers/group.py:504 ckan/controllers/group.py:537
-#: ckan/controllers/group.py:567 ckan/controllers/group.py:578
-#: ckan/controllers/group.py:632 ckan/controllers/group.py:658
-#: ckan/controllers/group.py:714 ckan/controllers/group.py:746
-#: ckan/controllers/group.py:779 ckan/controllers/group.py:836
-#: ckan/controllers/group.py:933 ckan/controllers/package.py:1270
+#: ckan/controllers/group.py:226 ckan/controllers/group.py:395
+#: ckan/controllers/group.py:505 ckan/controllers/group.py:538
+#: ckan/controllers/group.py:568 ckan/controllers/group.py:579
+#: ckan/controllers/group.py:633 ckan/controllers/group.py:659
+#: ckan/controllers/group.py:715 ckan/controllers/group.py:747
+#: ckan/controllers/group.py:780 ckan/controllers/group.py:837
+#: ckan/controllers/group.py:934 ckan/controllers/package.py:1270
 #: ckan/controllers/package.py:1285 ckan/logic/action/create.py:1373
 #: ckan/views/feed.py:143
 msgid "Group not found"
@@ -211,7 +211,7 @@ msgstr ""
 msgid "Organization not found"
 msgstr ""
 
-#: ckan/controllers/group.py:130 ckan/controllers/group.py:581
+#: ckan/controllers/group.py:130 ckan/controllers/group.py:582
 msgid "Incorrect group type"
 msgstr ""
 
@@ -262,7 +262,7 @@ msgstr ""
 msgid "Licenses"
 msgstr ""
 
-#: ckan/controllers/group.py:396 ckan/controllers/group.py:513
+#: ckan/controllers/group.py:397 ckan/controllers/group.py:514
 #: ckan/controllers/package.py:345 ckan/controllers/package.py:576
 #: ckan/controllers/package.py:794 ckan/controllers/package.py:1414
 #: ckan/controllers/package.py:1448
@@ -270,15 +270,15 @@ msgstr ""
 msgid "User %r not authorized to edit %s"
 msgstr ""
 
-#: ckan/controllers/group.py:443
+#: ckan/controllers/group.py:444
 msgid "Not authorized to perform bulk update"
 msgstr ""
 
-#: ckan/controllers/group.py:461
+#: ckan/controllers/group.py:462
 msgid "Unauthorized to create a group"
 msgstr ""
 
-#: ckan/controllers/group.py:539 ckan/controllers/group.py:569
+#: ckan/controllers/group.py:540 ckan/controllers/group.py:570
 #: ckan/controllers/package.py:949 ckan/controllers/package.py:997
 #: ckan/controllers/user.py:250 ckan/controllers/user.py:380
 #: ckan/controllers/user.py:551 ckan/views/user.py:193 ckan/views/user.py:300
@@ -286,80 +286,80 @@ msgstr ""
 msgid "Integrity Error"
 msgstr ""
 
-#: ckan/controllers/group.py:595
+#: ckan/controllers/group.py:596
 #, python-format
 msgid "User %r not authorized to edit %s authorizations"
 msgstr ""
 
-#: ckan/controllers/group.py:615 ckan/controllers/group.py:630
+#: ckan/controllers/group.py:616 ckan/controllers/group.py:631
 #, python-format
 msgid "Unauthorized to delete group %s"
 msgstr ""
 
-#: ckan/controllers/group.py:621
+#: ckan/controllers/group.py:622
 msgid "Organization has been deleted."
 msgstr ""
 
-#: ckan/controllers/group.py:623
+#: ckan/controllers/group.py:624
 msgid "Group has been deleted."
 msgstr ""
 
-#: ckan/controllers/group.py:625
+#: ckan/controllers/group.py:626
 #, python-format
 msgid "%s has been deleted."
 msgstr ""
 
-#: ckan/controllers/group.py:649
+#: ckan/controllers/group.py:650
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckan/controllers/group.py:670
+#: ckan/controllers/group.py:671
 #, python-format
 msgid "Unauthorized to create group %s members"
 msgstr ""
 
-#: ckan/controllers/group.py:712
+#: ckan/controllers/group.py:713
 #, python-format
 msgid "Unauthorized to add member to group %s"
 msgstr ""
 
-#: ckan/controllers/group.py:731 ckan/controllers/group.py:744
+#: ckan/controllers/group.py:732 ckan/controllers/group.py:745
 #, python-format
 msgid "Unauthorized to delete group %s members"
 msgstr ""
 
-#: ckan/controllers/group.py:738
+#: ckan/controllers/group.py:739
 msgid "Group member has been deleted."
 msgstr ""
 
-#: ckan/controllers/group.py:762 ckan/controllers/package.py:436
+#: ckan/controllers/group.py:763 ckan/controllers/package.py:436
 msgid "Select two revisions before doing the comparison."
 msgstr ""
 
-#: ckan/controllers/group.py:786
+#: ckan/controllers/group.py:787
 msgid "CKAN Group Revision History"
 msgstr ""
 
-#: ckan/controllers/group.py:790
+#: ckan/controllers/group.py:791
 msgid "Recent changes to CKAN Group: "
 msgstr ""
 
-#: ckan/controllers/group.py:811 ckan/controllers/package.py:487
+#: ckan/controllers/group.py:812 ckan/controllers/package.py:487
 msgid "Log message: "
 msgstr ""
 
-#: ckan/controllers/group.py:861 ckan/controllers/package.py:1198
+#: ckan/controllers/group.py:862 ckan/controllers/package.py:1198
 #: ckan/controllers/user.py:719 ckan/views/user.py:673
 msgid "You are now following {0}"
 msgstr ""
 
-#: ckan/controllers/group.py:881 ckan/controllers/package.py:1217
+#: ckan/controllers/group.py:882 ckan/controllers/package.py:1217
 #: ckan/controllers/user.py:739 ckan/views/user.py:695
 msgid "You are no longer following {0}"
 msgstr ""
 
-#: ckan/controllers/group.py:901 ckan/controllers/user.py:584
+#: ckan/controllers/group.py:902 ckan/controllers/user.py:584
 #: ckan/views/user.py:720
 #, python-format
 msgid "Unauthorized to view followers %s"
@@ -2040,6 +2040,10 @@ msgstr ""
 #: ckan/public/base/javascript/modules/resource-view-filters.js:52
 #: ckan/public/base/javascript/modules/resource-view-filters.min.js:3
 msgid "Select a field"
+msgstr ""
+
+#: ckan/public/base/javascript/modules/resource-view-reorder.js:41
+msgid "Reorder resource view"
 msgstr ""
 
 #: ckan/public-bs2/base/javascript/modules/slug-preview.js:57
