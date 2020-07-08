@@ -1,6 +1,7 @@
 this.recline = this.recline || {};
 this.recline.Backend = this.recline.Backend || {};
 this.recline.Backend.DataProxy = this.recline.Backend.DataProxy || {};
+const current_lang = parent.document.getElementById("current-lang").innerHTML;
 
 (function(my) {
   "use strict";
@@ -1072,8 +1073,22 @@ my.Flot = Backbone.View.extend({
       </div> \
     </div> \
 ',
+  template_it: ' \
+    <div class="recline-flot"> \
+      <div class="panel graph" style="display: block;"> \
+        <div class="js-temp-notice alert alert-warning alert-block"> \
+          <h3 class="alert-heading">Ciao!</h3> \
+          <p>Il grafico non è ancora presente perché non sappiamo che campi vuoi visualizzare.</p> \
+          <p>Seleziona i campi <strong>utilizzando il menu a destra</strong> e il grafico apparirà automaticamente.</p> \
+        </div> \
+      </div> \
+    </div> \
+',
 
   initialize: function(options) {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    }
     var self = this;
     this.graphColors = ["#edc240", "#afd8f8", "#cb4b4b", "#4da74d", "#9440ed"];
 
@@ -1104,6 +1119,9 @@ my.Flot = Backbone.View.extend({
   },
 
   render: function() {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    }
     var self = this;
     var tmplData = this.model.toTemplateJSON();
     var htmls = Mustache.render(this.template, tmplData);
@@ -1441,11 +1459,67 @@ my.FlotControls = Backbone.View.extend({
     </form> \
   </div> \
 ',
+  template_it: ' \
+  <div class="editor"> \
+    <form class="form-stacked"> \
+      <div class="clearfix"> \
+        <div class="form-group"> \
+          <label>Tipo di Grafico</label> \
+          <div class="input editor-type"> \
+            <select class="form-control"> \
+              <option value="lines-and-points">Linee e Punti</option> \
+              <option value="lines">Linee</option> \
+              <option value="points">Punti</option> \
+              <option value="bars">Barre</option> \
+              <option value="columns">Colonne</option> \
+            </select> \
+          </div> \
+        </div> \
+        <div class="form-group"> \
+          <label>Colonna Gruppo (Asse 1)</label> \
+          <div class="input editor-group"> \
+            <select class="form-control"> \
+              <option value="">Selezionare ...</option> \
+                {{#fields}} \
+              <option value="{{id}}">{{label}}</option> \
+                {{/fields}} \
+            </select> \
+          </div> \
+        </div> \
+        <div class="editor-series-group"> \
+        </div> \
+      </div> \
+      <div class="editor-buttons"> \
+        <button class="btn btn-default editor-add">Aggiungi Serie</button> \
+      </div> \
+      <div class="editor-buttons editor-submit" comment="hidden temporarily" style="display: none;"> \
+        <button class="editor-save">Salva</button> \
+        <input type="hidden" class="editor-id" value="chart-1" /> \
+      </div> \
+    </form> \
+  </div> \
+',
   templateSeriesEditor: ' \
     <div class="editor-series js-series-{{seriesIndex}}"> \
       <div class="form-group"> \
         <label>Series <span>{{seriesName}} (Axis 2)</span> \
           [<a href="#remove" class="action-remove-series">Remove</a>] \
+        </label> \
+        <div class="input"> \
+          <select class="form-control"> \
+          {{#fields}} \
+          <option value="{{id}}">{{label}}</option> \
+          {{/fields}} \
+          </select> \
+        </div> \
+      </div> \
+    </div> \
+  ',
+  templateSeriesEditor_it: ' \
+    <div class="editor-series js-series-{{seriesIndex}}"> \
+      <div class="form-group"> \
+        <label>Serie <span>{{seriesName}} (Asse 2)</span> \
+          [<a href="#remove" class="action-remove-series">Rimuovi</a>] \
         </label> \
         <div class="input"> \
           <select class="form-control"> \
@@ -1464,6 +1538,10 @@ my.FlotControls = Backbone.View.extend({
   },
 
   initialize: function(options) {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    	this.templateSeriesEditor = this.templateSeriesEditor_it;
+    }
     var self = this;
     _.bindAll(this, 'render');
     this.listenTo(this.model.fields, 'reset add', this.render);
@@ -1472,6 +1550,10 @@ my.FlotControls = Backbone.View.extend({
   },
 
   render: function() {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    	this.templateSeriesEditor = this.templateSeriesEditor_it;
+    }
     var self = this;
     var tmplData = this.model.toTemplateJSON();
     var htmls = Mustache.render(this.template, tmplData);
@@ -1535,6 +1617,11 @@ my.FlotControls = Backbone.View.extend({
       seriesIndex: idx,
       seriesName: String.fromCharCode(idx + 64 + 1)
     }, this.model.toTemplateJSON());
+
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    	this.templateSeriesEditor = this.templateSeriesEditor_it;
+    }
 
     var htmls = Mustache.render(this.templateSeriesEditor, data);
     this.$el.find('.editor-series-group').append(htmls);
@@ -2393,6 +2480,63 @@ my.MapMenu = Backbone.View.extend({
       <input type="hidden" class="editor-id" value="map-1" /> \
     </form> \
   ',
+  template_it: ' \
+    <form class="form-stacked"> \
+      <div class="clearfix"> \
+        <div class="editor-field-type"> \
+            <label class="radio"> \
+              <input type="radio" id="editor-field-type-latlon" name="editor-field-type" value="latlon" checked="checked"/> \
+              Campi Latitudine / Longitudine</label> \
+            <label class="radio"> \
+              <input type="radio" id="editor-field-type-geom" name="editor-field-type" value="geom" /> \
+              Campo GeoJSON</label> \
+        </div> \
+        <div class="editor-field-type-latlon"> \
+          <label>Campo Latitudine</label> \
+          <div class="input editor-lat-field"> \
+            <select class="form-control"> \
+            <option value=""></option> \
+            {{#fields}} \
+            <option value="{{id}}">{{label}}</option> \
+            {{/fields}} \
+            </select> \
+          </div> \
+          <label>Campo Longitudine</label> \
+          <div class="input editor-lon-field"> \
+            <select class="form-control"> \
+            <option value=""></option> \
+            {{#fields}} \
+            <option value="{{id}}">{{label}}</option> \
+            {{/fields}} \
+            </select> \
+          </div> \
+        </div> \
+        <div class="editor-field-type-geom" style="display:none"> \
+          <label>Campo Geometrico (GeoJSON)</label> \
+          <div class="input editor-geom-field"> \
+            <select class="form-control"> \
+            <option value=""></option> \
+            {{#fields}} \
+            <option value="{{id}}">{{label}}</option> \
+            {{/fields}} \
+            </select> \
+          </div> \
+        </div> \
+      </div> \
+      <div class="editor-buttons"> \
+        <button class="btn btn-default editor-update-map">Aggiorna</button> \
+      </div> \
+      <div class="editor-options" > \
+        <label class="checkbox"> \
+          <input type="checkbox" id="editor-auto-zoom" value="autozoom" checked="checked" /> \
+          Auto zoom</label> \
+        <label class="checkbox"> \
+          <input type="checkbox" id="editor-cluster" value="cluster"/> \
+          Raggruppa marcatori</label> \
+      </div> \
+      <input type="hidden" class="editor-id" value="map-1" /> \
+    </form> \
+  ',
 
   // Define here events for UI elements
   events: {
@@ -2403,6 +2547,9 @@ my.MapMenu = Backbone.View.extend({
   },
 
   initialize: function(options) {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    }
     var self = this;
     _.bindAll(this, 'render');
     this.listenTo(this.model.fields, 'change', this.render);
@@ -2415,6 +2562,9 @@ my.MapMenu = Backbone.View.extend({
   //
   // Also sets up the editor fields and the map if necessary.
   render: function() {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    }
     var self = this;
     var htmls = Mustache.render(this.template, this.model.toTemplateJSON());
     this.$el.html(htmls);
@@ -2634,12 +2784,43 @@ my.MultiView = Backbone.View.extend({
     <div class="data-view-container"></div> \
   </div> \
   ',
+  template_it: ' \
+  <div class="recline-data-explorer"> \
+    <div class="alert-messages"></div> \
+    \
+    <div class="header clearfix"> \
+      <div class="navigation"> \
+        <div class="btn-group" data-toggle="buttons-radio"> \
+        {{#views}} \
+        <button href="#{{id}}" data-view="{{id}}" class="btn btn-default">{{label}}</button> \
+        {{/views}} \
+        </div> \
+      </div> \
+      <div class="recline-results-info"> \
+        <span class="doc-count">{{recordCount}}</span> elementi\
+      </div> \
+      <div class="menu-right"> \
+        <div class="btn-group" data-toggle="buttons-checkbox"> \
+          {{#sidebarViews}} \
+          <button href="#" data-action="{{id}}" class="btn btn-default">{{label}}</button> \
+          {{/sidebarViews}} \
+        </div> \
+      </div> \
+      <div class="query-editor-here" style="display:inline;"></div> \
+    </div> \
+    <div class="data-view-sidebar"></div> \
+    <div class="data-view-container"></div> \
+  </div> \
+  ',
   events: {
     'click .menu-right button': '_onMenuClick',
     'click .navigation button': '_onSwitchView'
   },
 
   initialize: function(options) {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    }
     var self = this;
     this._setupState(options.state);
 
@@ -2677,6 +2858,14 @@ my.MultiView = Backbone.View.extend({
         })
       }];
     }
+    for (var i = 0; i < this.pageViews.length; i++) {
+      if (this.pageViews[i].label == 'Grid' && current_lang == 'it')
+        this.pageViews[i].label = 'Griglia';
+      else if (this.pageViews[i].label == 'Graph' && current_lang == 'it')
+        this.pageViews[i].label = 'Grafico';
+      else if (this.pageViews[i].label == 'Map' && current_lang == 'it')
+        this.pageViews[i].label = 'Mappa';
+    }
     // Hashes of sidebar elements
     if(options.sidebarViews) {
       this.sidebarViews = options.sidebarViews;
@@ -2694,6 +2883,12 @@ my.MultiView = Backbone.View.extend({
           model: this.model
         })
       }];
+    }
+    for (var i = 0; i < this.sidebarViews.length; i++) {
+      if (this.sidebarViews[i].label == 'Filters' && current_lang == 'it')
+        this.sidebarViews[i].label = 'Filtri';
+      else if (this.sidebarViews[i].label == 'Fields' && current_lang == 'it')
+        this.sidebarViews[i].label = 'Campi';
     }
     // these must be called after pageViews are created
     this.render();
@@ -2715,7 +2910,7 @@ my.MultiView = Backbone.View.extend({
     });
     this.listenTo(this.model, 'query:done', function() {
       self.clearNotifications();
-      self.$el.find('.doc-count').text(self.model.recordCount || 'Unknown');
+      self.$el.find('.doc-count').text(self.model.recordCount || (current_lang == 'it' ? '0' : 'Unknown'));
     });
     this.listenTo(this.model, 'query:fail', function(error) {
       self.clearNotifications();
@@ -2746,6 +2941,9 @@ my.MultiView = Backbone.View.extend({
   },
 
   render: function() {
+    if (current_lang == 'it') {
+    	this.template = this.template_it;
+    }
     var tmplData = this.model.toTemplateJSON();
     tmplData.views = this.pageViews;
     tmplData.sidebarViews = this.sidebarViews;
@@ -2932,7 +3130,7 @@ my.MultiView = Backbone.View.extend({
   // * loader: if true show loading spinner
   notify: function(flash) {
     var tmplData = _.extend({
-      message: 'Loading',
+      message: current_lang == 'it' ? 'Caricamento' : 'Loading',
       category: 'warning',
       loader: false
       },
@@ -4077,6 +4275,39 @@ my.FilterEditor = Backbone.View.extend({
       </form> \
     </div> \
   ',
+  template_it: ' \
+    <div class="filters"> \
+      <h3>Filtri</h3> \
+      <a href="#" class="js-add-filter">Aggiungi</a> \
+      <form class="form-stacked js-add" style="display: none;"> \
+        <div class="form-group"> \
+          <label>Campo</label> \
+          <select class="fields form-control"> \
+            {{#fields}} \
+            <option value="{{id}}">{{label}}</option> \
+            {{/fields}} \
+          </select> \
+        </div> \
+        <div class="form-group"> \
+          <label>Tipo di filtro</label> \
+          <select class="filterType form-control"> \
+            <option value="term">Volre</option> \
+            <option value="range">Intervallo</option> \
+            <option value="geo_distance">Distanza geografica</option> \
+          </select> \
+        </div> \
+        <button type="submit" class="btn btn-default">Aggiungi</button> \
+      </form> \
+      <form class="form-stacked js-edit"> \
+        {{#filters}} \
+          {{{filterRender}}} \
+        {{/filters}} \
+        {{#filters.length}} \
+        <button type="submit" class="btn btn-default">Aggiorna</button> \
+        {{/filters.length}} \
+      </form> \
+    </div> \
+  ',
   filterTemplates: {
     term: ' \
       <div class="filter-{{type}} filter"> \
@@ -4130,6 +4361,59 @@ my.FilterEditor = Backbone.View.extend({
       </div> \
     '
   },
+  filterTemplates_it: {
+    term: ' \
+      <div class="filter-{{type}} filter"> \
+        <fieldset> \
+          <legend> \
+            {{field}} <small>{{type}}</small> \
+            <a class="js-remove-filter" href="#" title="Rimuovi filtro" data-filter-id="{{id}}">&times;</a> \
+          </legend> \
+          <input class="input-sm" type="text" value="{{term}}" name="term" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
+        </fieldset> \
+      </div> \
+    ',
+    range: ' \
+      <div class="filter-{{type}} filter"> \
+        <fieldset> \
+          <legend> \
+            {{field}} <small>{{type}}</small> \
+            <a class="js-remove-filter" href="#" title="Rimuovi filtro" data-filter-id="{{id}}">&times;</a> \
+          </legend> \
+          <div class="form-group"> \
+            <label class="control-label" for="">Da</label> \
+            <input class="input-sm" type="text" value="{{from}}" name="from" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
+          </div> \
+          <div class="form-group"> \
+            <label class="control-label" for="">A</label> \
+            <input class="input-sm" type="text" value="{{to}}" name="to" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
+          </div> \
+        </fieldset> \
+      </div> \
+    ',
+    geo_distance: ' \
+      <div class="filter-{{type}} filter"> \
+        <fieldset> \
+          <legend> \
+            {{field}} <small>{{type}}</small> \
+            <a class="js-remove-filter" href="#" title="Rimuovi filtro" data-filter-id="{{id}}">&times;</a> \
+          </legend> \
+          <div class="form-group"> \
+            <label class="control-label" for="">Longitudine</label> \
+            <input class="input-sm" type="text" value="{{point.lon}}" name="lon" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
+          </div> \
+          <div class="form-group"> \
+            <label class="control-label" for="">Latitudine</label> \
+            <input class="input-sm" type="text" value="{{point.lat}}" name="lat" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
+          </div> \
+          <div class="form-group"> \
+            <label class="control-label" for="">Distanza (km)</label> \
+            <input class="input-sm" type="text" value="{{distance}}" name="distance" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
+          </div> \
+        </fieldset> \
+      </div> \
+    '
+  },
   events: {
     'click .js-remove-filter': 'onRemoveFilter',
     'click .js-add-filter': 'onAddFilterShow',
@@ -4137,12 +4421,20 @@ my.FilterEditor = Backbone.View.extend({
     'submit form.js-add': 'onAddFilter'
   },
   initialize: function() {
+    if (current_lang == 'it') {
+      this.template = this.template_it;
+      this.filterTemplates = this.filterTemplates_it;
+    }
     _.bindAll(this, 'render');
     this.listenTo(this.model.fields, 'all', this.render);
     this.listenTo(this.model.queryState, 'change change:filters:new-blank', this.render);
     this.render();
   },
   render: function() {
+    if (current_lang == 'it') {
+      this.template = this.template_it;
+      this.filterTemplates = this.filterTemplates_it;
+    }
     var self = this;
     var tmplData = $.extend(true, {}, this.model.queryState.toJSON());
     // we will use idx in list as there id ...
@@ -4152,6 +4444,10 @@ my.FilterEditor = Backbone.View.extend({
     });
     tmplData.fields = this.model.fields.toJSON();
     tmplData.filterRender = function() {
+      if (current_lang == 'it') {
+        this.template = this.template_it;
+        this.filterTemplates = this.filterTemplates_it;
+      }
       return Mustache.render(self.filterTemplates[this.type], this);
     };
     var out = Mustache.render(this.template, tmplData);
@@ -4313,12 +4609,29 @@ my.QueryEditor = Backbone.View.extend({
       <button type="submit" class="btn btn-default">Go &raquo;</button> \
     </form> \
   ',
+  template_it: ' \
+    <form action="" method="GET" class="form-inline" role="form"> \
+      <div class="form-group"> \
+        <div class="input-group text-query"> \
+          <div class="input-group-addon"> \
+            <i class="glyphicon glyphicon-search"></i> \
+          </div> \
+          <label for="q">Cerca</label> \
+          <input class="form-control search-query" type="text" id="q" name="q" value="{{q}}" placeholder="Cerca nei dati ..."> \
+        </div> \
+      </div> \
+      <button type="submit" class="btn btn-default">Vai &raquo;</button> \
+    </form> \
+  ',
 
   events: {
     'submit form': 'onFormSubmit'
   },
 
   initialize: function() {
+    if (current_lang == 'it'){
+      this.template = this.template_it;
+    }
     _.bindAll(this, 'render');
     this.listenTo(this.model, 'change', this.render);
     this.render();
@@ -4329,6 +4642,9 @@ my.QueryEditor = Backbone.View.extend({
     this.model.set({q: query});
   },
   render: function() {
+    if (current_lang == 'it'){
+      this.template = this.template_it;
+    }
     var tmplData = this.model.toJSON();
     var templated = Mustache.render(this.template, tmplData);
     this.$el.html(templated);
@@ -4372,12 +4688,48 @@ my.ValueFilter = Backbone.View.extend({
       </form> \
     </div> \
   ',
+  template_it: ' \
+    <div class="filters"> \
+      <h3>Filtri</h3> \
+      <button class="btn js-add-filter add-filter">Aggiungi filtro</button> \
+      <form class="form-stacked js-add" style="display: none;"> \
+        <fieldset> \
+          <label>Campo</label> \
+          <select class="fields form-control"> \
+            {{#fields}} \
+            <option value="{{id}}">{{label}}</option> \
+            {{/fields}} \
+          </select> \
+          <button type="submit" class="btn">Aggiungi</button> \
+        </fieldset> \
+      </form> \
+      <form class="form-stacked js-edit"> \
+        {{#filters}} \
+          {{{filterRender}}} \
+        {{/filters}} \
+        {{#filters.length}} \
+        <button type="submit" class="btn update-filter">Aggiorna</button> \
+        {{/filters.length}} \
+      </form> \
+    </div> \
+  ',
   filterTemplates: {
     term: ' \
       <div class="filter-{{type}} filter"> \
         <fieldset> \
           {{field}} \
           <a class="js-remove-filter" href="#" title="Remove this filter" data-filter-id="{{id}}">&times;</a> \
+          <input type="text" value="{{term}}" name="term" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
+        </fieldset> \
+      </div> \
+    '
+  },
+  filterTemplates_it: {
+    term: ' \
+      <div class="filter-{{type}} filter"> \
+        <fieldset> \
+          {{field}} \
+          <a class="js-remove-filter" href="#" title="Rimuovi filtro" data-filter-id="{{id}}">&times;</a> \
           <input type="text" value="{{term}}" name="term" data-filter-field="{{field}}" data-filter-id="{{id}}" data-filter-type="{{type}}" /> \
         </fieldset> \
       </div> \
@@ -4390,12 +4742,20 @@ my.ValueFilter = Backbone.View.extend({
     'submit form.js-add': 'onAddFilter'
   },
   initialize: function() {
+    if (current_lang == 'it') {
+      this.template = this.template_it;
+      this.filterTemplates = this.filterTemplates_it;
+    }
     _.bindAll(this, 'render');
     this.listenTo(this.model.fields, 'all', this.render);
     this.listenTo(this.model.queryState, 'change change:filters:new-blank', this.render);
     this.render();
   },
   render: function() {
+    if (current_lang == 'it') {
+      this.template = this.template_it;
+      this.filterTemplates = this.filterTemplates_it;
+    }
     var self = this;
     var tmplData = $.extend(true, {}, this.model.queryState.toJSON());
     // we will use idx in list as the id ...
@@ -4405,6 +4765,10 @@ my.ValueFilter = Backbone.View.extend({
     });
     tmplData.fields = this.model.fields.toJSON();
     tmplData.filterRender = function() {
+      if (current_lang == 'it') {
+        this.template = this.template_it;
+        this.filterTemplates = this.filterTemplates_it;
+      }
       return Mustache.render(self.filterTemplates.term, this);
     };
     var out = Mustache.render(this.template, tmplData);
